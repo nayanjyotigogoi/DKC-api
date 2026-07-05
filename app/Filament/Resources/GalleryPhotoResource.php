@@ -6,6 +6,8 @@ use App\Filament\Resources\GalleryPhotoResource\Pages;
 use App\Models\GalleryPhoto;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,6 +15,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
 class GalleryPhotoResource extends Resource
@@ -41,7 +44,22 @@ class GalleryPhotoResource extends Resource
                         'landscape' => 'Landscape',
                         'square'    => 'Square',
                     ]),
-                TextInput::make('image_path'),
+                FileUpload::make('image_path')
+                    ->label('Upload New Photo')
+                    ->image()
+                    ->disk('gallery')
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(10240),
+                Placeholder::make('current_image')
+                    ->label('Current Photo')
+                    ->content(fn ($record) => $record?->image_path
+                        ? new \Illuminate\Support\HtmlString(
+                            '<img src="' . config('app.url') . '/gallery/images/' . $record->image_path . '"
+                                  style="max-width:300px; max-height:200px; border-radius:8px; object-fit:cover;" />'
+                        )
+                        : 'No image uploaded yet'
+                    )
+                    ->visibleOn('edit'),
                 TextInput::make('color'),
                 TextInput::make('icon'),
                 TextInput::make('sort_order')->numeric(),
@@ -53,6 +71,11 @@ class GalleryPhotoResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image_path')
+                    ->label('Photo')
+                    ->disk('gallery')
+                    ->height(60)
+                    ->width(80),
                 TextColumn::make('caption')->searchable(),
                 BadgeColumn::make('category'),
                 TextColumn::make('event_name'),

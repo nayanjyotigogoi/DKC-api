@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Application Received – DKC</title>
+  <title>Event Registration Confirmed – DKC</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #FAF6F0; font-family: 'Helvetica Neue', Arial, sans-serif; color: #2B2B2B; }
@@ -16,17 +16,14 @@
     .body { padding: 40px; }
     .greeting { font-size: 22px; font-weight: 700; color: #8B1E24; margin-bottom: 16px; }
     .intro { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 28px; }
+    .event-card { background: #FAF3ED; border-radius: 14px; padding: 24px 28px; margin-bottom: 28px; border-left: 4px solid #8B1E24; }
+    .event-title { font-size: 18px; font-weight: 700; color: #8B1E24; margin-bottom: 16px; }
     .card { background: #FAF3ED; border-radius: 14px; padding: 24px 28px; margin-bottom: 28px; }
     .card h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #8B1E24; margin-bottom: 16px; }
     .detail-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(139,30,36,0.08); }
     .detail-row:last-child { border-bottom: none; }
     .detail-label { font-size: 13px; font-weight: 600; color: #8B1E24; min-width: 130px; }
     .detail-value { font-size: 13px; color: #555; flex: 1; }
-    .steps { margin-bottom: 28px; }
-    .steps h3 { font-size: 14px; font-weight: 700; color: #2B2B2B; margin-bottom: 14px; }
-    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
-    .step-num { width: 28px; height: 28px; background: #8B1E24; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-    .step-text { font-size: 14px; color: #555; line-height: 1.5; padding-top: 4px; }
     .cta-box { background: #8B1E24; border-radius: 14px; padding: 24px 28px; text-align: center; margin-bottom: 28px; }
     .cta-box p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 14px; }
     .cta-btn { display: inline-block; background: #fff; color: #8B1E24; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 30px; text-decoration: none; }
@@ -39,99 +36,73 @@
 <body>
   <div class="wrapper">
 
-    <!-- Header -->
     <div class="header">
       <span class="badge">Dibrugarh Korean Club</span>
-      <span class="korean">환영합니다</span>
-      <h1>Your Application is Received!</h1>
-      <p>한국어 클럽에 오신 것을 환영합니다 · Welcome to DKC</p>
+      <span class="korean">등록완료</span>
+      <h1>You're Registered! 🎉</h1>
+      <p>이벤트 등록이 완료되었습니다 · See you there!</p>
     </div>
 
-    <!-- Body -->
     <div class="body">
 
-      <p class="greeting">안녕하세요, {{ $application->full_name }}! 👋</p>
+      <p class="greeting">안녕하세요, {{ $registration->full_name }}! 👋</p>
 
       <p class="intro">
-        Thank you so much for applying to the <strong>Dibrugarh Korean Club</strong>. We're thrilled
-        to see your interest in Korean language and culture! Your application has been successfully
-        received and our team will review it shortly.
+        Great news — your registration for the upcoming <strong>Dibrugarh Korean Club</strong> event has been confirmed!
+        We're excited to see you there. Here are your registration details:
       </p>
 
-      <!-- Application summary -->
+      <div class="event-card">
+        <div class="event-title">{{ $registration->event_title }}</div>
+        <p style="font-size:13px; color:#666;">We'll send you any updates about the event (time, venue changes, etc.) via email — so keep an eye on your inbox.</p>
+      </div>
+
       <div class="card">
-        <h3>Your Application Details</h3>
+        <h3>Your Registration Details</h3>
         <div class="detail-row">
           <span class="detail-label">Full Name</span>
-          <span class="detail-value">{{ $application->full_name }}</span>
+          <span class="detail-value">{{ $registration->full_name }}</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Email</span>
-          <span class="detail-value">{{ $application->email }}</span>
+          <span class="detail-value">{{ $registration->email }}</span>
         </div>
-        @if($application->phone)
+        @if($registration->phone)
         <div class="detail-row">
           <span class="detail-label">Phone</span>
-          <span class="detail-value">{{ $application->phone }}</span>
+          <span class="detail-value">{{ $registration->phone }}</span>
         </div>
         @endif
+        @if($registration->department)
         <div class="detail-row">
           <span class="detail-label">Department</span>
-          <span class="detail-value">{{ $application->department }}{{ $application->course ? ' — ' . $application->course : '' }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Year of Study</span>
-          <span class="detail-value">{{ $application->year_of_study }}</span>
-        </div>
-        @if($application->favourite_korean_thing)
-        <div class="detail-row">
-          <span class="detail-label">Favourite Korean Thing</span>
-          <span class="detail-value">{{ $application->favourite_korean_thing }}</span>
+          <span class="detail-value">{{ $registration->department }}</span>
         </div>
         @endif
         <div class="detail-row">
-          <span class="detail-label">Applied On</span>
-          <span class="detail-value">{{ $application->created_at->format('F j, Y \a\t g:i A') }}</span>
+          <span class="detail-label">Registered On</span>
+          <span class="detail-value">{{ $registration->created_at->format('F j, Y \a\t g:i A') }}</span>
         </div>
       </div>
 
-      <!-- What happens next -->
-      <div class="steps">
-        <h3>What happens next?</h3>
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-text"><strong>Review</strong> — Our team reviews all applications within 3–5 working days.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-text"><strong>Notification</strong> — You'll receive a confirmation email with your membership status.</div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-text"><strong>Welcome!</strong> — Once approved, you'll be added to our community and invited to upcoming events.</div>
-        </div>
-      </div>
-
-      <!-- CTA -->
       <div class="cta-box">
-        <p>While you wait, explore our events, magazine and Korean culture resources on our website!</p>
+        <p>Check out our other upcoming events, magazine and Korean culture resources!</p>
         <a href="{{ env('FRONTEND_URL', 'https://dibrugarhkoreanclub.com') }}" class="cta-btn">Visit DKC Website →</a>
       </div>
 
       <p style="font-size:14px; color:#666; line-height:1.7;">
-        If you have any questions in the meantime, feel free to reply to this email or reach out to us
-        on Instagram. We're always happy to help!<br><br>
-        화이팅! (Hwaiting!) — You've got this! 🌸
+        If you have any questions about the event, feel free to reply to this email or reach us at
+        <a href="mailto:connect@dibrugarhkoreanclub.com" style="color:#8B1E24;">connect@dibrugarhkoreanclub.com</a>.<br><br>
+        화이팅! (Hwaiting!) — See you soon! 🌸
       </p>
 
     </div>
 
-    <!-- Footer -->
     <div class="footer">
       <div class="korean-footer">대한민국 · DKC</div>
       <div class="brand">Dibrugarh Korean Club</div>
       <p>Dibrugarh University, Assam, India<br>
-      This email was sent because you submitted a membership application on our website.</p>
+      This email was sent because you registered for an event on our website.</p>
     </div>
 
   </div>

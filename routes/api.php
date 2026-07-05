@@ -13,10 +13,12 @@ use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CourseInterestController;
 use App\Http\Controllers\Api\ResourceController;
+use App\Http\Controllers\Api\EventRegistrationController;
 
 Route::prefix('v1')->group(function () {
     // Form submissions — strict rate limit (3/min per IP)
     Route::post('apply', [ApplicationController::class, 'store'])->middleware('throttle:apply');
+    Route::post('event-register', [EventRegistrationController::class, 'store'])->middleware('throttle:apply');
     Route::post('course-interest', [CourseInterestController::class, 'store'])->middleware('throttle:apply');
     Route::post('contact', [ContactController::class, 'store'])->middleware('throttle:apply');
 

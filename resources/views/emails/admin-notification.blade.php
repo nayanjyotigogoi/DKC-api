@@ -40,7 +40,10 @@
       <h1>New Submission Received</h1>
       <div class="sub">{{ now()->format('F j, Y \a\t g:i A') }}</div>
       <div class="type-badge {{ $type === 'application' ? 'type-application' : 'type-course' }}">
-        {{ $type === 'application' ? 'Membership Application' : 'Course Interest' }}
+        @if($type === 'application') Membership Application
+        @elseif($type === 'event') Event Registration
+        @else Course Interest
+        @endif
       </div>
     </div>
 
