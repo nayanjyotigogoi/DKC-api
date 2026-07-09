@@ -31,10 +31,16 @@ class User extends Authenticatable implements FilamentUser
         'is_active' => 'boolean',
     ];
 
-    /** Only active users with a valid role can access Filament. */
+    /** Only active users with a recognised role can access Filament. */
     public function canAccessFilament(): bool
     {
-        return $this->is_active && $this->hasAnyRole(['super_admin', 'admin', 'editor']);
+        return $this->is_active && $this->hasAnyRole([
+            'super_admin',
+            'admin',
+            'editor',
+            'academic_lead',
+            'study_coordinator',
+        ]);
     }
 
     public function isSuperAdmin(): bool
@@ -45,5 +51,11 @@ class User extends Authenticatable implements FilamentUser
     public function isAdmin(): bool
     {
         return $this->hasAnyRole(['super_admin', 'admin']);
+    }
+
+    /** Whether this user may access the Learning Management panel area. */
+    public function canManageLearning(): bool
+    {
+        return $this->hasAnyRole(['super_admin', 'admin', 'academic_lead', 'study_coordinator']);
     }
 }

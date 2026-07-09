@@ -24,7 +24,10 @@ return [
         env('FRONTEND_URL'),
     ])),
 
-    'allowed_origins_patterns' => [],
+    // Allow any localhost port for local development (covers Next.js auto-port fallbacks)
+    'allowed_origins_patterns' => [
+        '#^http://localhost(:\d+)?$#',
+    ],
 
     'allowed_headers' => ['Content-Type', 'Accept', 'X-Requested-With'],
 

@@ -14,6 +14,14 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CourseInterestController;
 use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\EventRegistrationController;
+use App\Http\Controllers\Api\Learning\ModuleController;
+use App\Http\Controllers\Api\Learning\LessonController;
+use App\Http\Controllers\Api\Learning\VocabularyController;
+use App\Http\Controllers\Api\Learning\GrammarController;
+use App\Http\Controllers\Api\Learning\ConversationController;
+use App\Http\Controllers\Api\Learning\SearchController;
+use App\Http\Controllers\Api\Learning\QuizController;
+use App\Http\Controllers\Api\Learning\CulturalNoteController;
 
 Route::prefix('v1')->group(function () {
     // Form submissions — strict rate limit (3/min per IP)
@@ -37,5 +45,23 @@ Route::prefix('v1')->group(function () {
         Route::get('settings', [SiteSettingController::class, 'index']);
         Route::get('resources/categories', [ResourceController::class, 'categories']);
         Route::get('resources', [ResourceController::class, 'index']);
+
+        // ── Learning Platform — public read endpoints ──────────────────────
+        Route::prefix('learning')->group(function () {
+            Route::get('modules',                  [ModuleController::class, 'index']);
+            Route::get('modules/{id}/lessons',     [ModuleController::class, 'lessons']);
+            Route::get('lessons',                  [LessonController::class, 'index']);
+            Route::get('lessons/{slug}',           [LessonController::class, 'show']);
+            Route::get('vocabulary',               [VocabularyController::class, 'index']);
+            Route::get('vocabulary/{id}',          [VocabularyController::class, 'show']);
+            Route::get('grammar',                  [GrammarController::class, 'index']);
+            Route::get('grammar/{id}',             [GrammarController::class, 'show']);
+            Route::get('conversations',            [ConversationController::class, 'index']);
+            Route::get('conversations/{id}',       [ConversationController::class, 'show']);
+            Route::get('cultural-notes',           [CulturalNoteController::class, 'index']);
+            Route::get('cultural-notes/{id}',      [CulturalNoteController::class, 'show']);
+            Route::get('lessons/{slug}/quiz',      [QuizController::class, 'forLesson']);
+            Route::get('search',                   SearchController::class);
+        });
     });
 });
