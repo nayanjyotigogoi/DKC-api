@@ -115,7 +115,7 @@ class MemberApplicationResource extends Resource
     }
 
     public static function canViewAny(): bool { return auth()->user()?->isAdmin() ?? false; }
-    public static function canCreate(): bool  { return false; } // only via public form
+    public static function canCreate(): bool  { return auth()->user()?->isAdmin() ?? false; }
     public static function canEdit($record): bool   { return auth()->user()?->isAdmin() ?? false; }
     public static function canDelete($record): bool { return auth()->user()?->isSuperAdmin() ?? false; }
 }

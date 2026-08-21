@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SiteSettingController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CourseInterestController;
+use App\Http\Controllers\Api\ClubMemberController;
 use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\EventRegistrationController;
 use App\Http\Controllers\Api\Learning\ModuleController;
@@ -39,6 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::get('magazine/{slug}', [MagazineController::class, 'show']);
         Route::get('goodies', [GoodieController::class, 'index']);
         Route::get('members', [MemberController::class, 'index']);
+        Route::get('club-members', [ClubMemberController::class, 'index']);
         Route::get('phrases', [KoreanPhraseController::class, 'index']);
         Route::get('fun-facts', [FunFactController::class, 'index']);
         Route::get('media-picks', [MediaPickController::class, 'index']);

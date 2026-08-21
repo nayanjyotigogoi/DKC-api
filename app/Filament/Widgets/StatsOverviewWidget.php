@@ -22,7 +22,7 @@ class StatsOverviewWidget extends BaseWidget
         $pendingApps = MemberApplication::where('status', 'pending')->count();
 
         return [
-            Card::make('Total Members', Member::count())
+            Card::make('Total Members', MemberApplication::where('status', 'approved')->count())
                 ->description('Registered club members')
                 ->descriptionIcon('heroicon-s-user-group')
                 ->color('success'),
