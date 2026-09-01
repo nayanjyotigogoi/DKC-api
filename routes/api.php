@@ -23,6 +23,8 @@ use App\Http\Controllers\Api\Learning\ConversationController;
 use App\Http\Controllers\Api\Learning\SearchController;
 use App\Http\Controllers\Api\Learning\QuizController;
 use App\Http\Controllers\Api\Learning\CulturalNoteController;
+use App\Http\Controllers\Api\Admin\LearningChapterController;
+use App\Http\Controllers\Api\Admin\AuthController;
 
 Route::prefix('v1')->group(function () {
     // Form submissions — strict rate limit (3/min per IP)
@@ -48,6 +50,10 @@ Route::prefix('v1')->group(function () {
         Route::get('resources/categories', [ResourceController::class, 'categories']);
         Route::get('resources', [ResourceController::class, 'index']);
 
+        // ── Chapter-based learning — public read ──────────────────────────
+        Route::get('learning/chapters',        [LearningChapterController::class, 'publicIndex']);
+        Route::get('learning/chapters/{slug}', [LearningChapterController::class, 'publicShow']);
+
         // ── Learning Platform — public read endpoints ──────────────────────
         Route::prefix('learning')->group(function () {
             Route::get('modules',                  [ModuleController::class, 'index']);
@@ -65,5 +71,27 @@ Route::prefix('v1')->group(function () {
             Route::get('lessons/{slug}/quiz',      [QuizController::class, 'forLesson']);
             Route::get('search',                   SearchController::class);
         });
+    });
+
+    // ── Admin auth (public — no token needed) ─────────────────────────────────
+    Route::post('admin/login', [AuthController::class, 'login']);
+
+    // ── Admin routes — require auth (Sanctum token) ───────────────────────────
+    Route::middleware(['auth:sanctum'])->prefix('admin')->group(function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::get('me',     [AuthController::class, 'me']);
+        Route::prefix('learning/chapters')->group(function () {
+            Route::get('/',           [LearningChapterController::class, 'index']);
+            Route::get('{chapter}',   [LearningChapterController::class, 'show']);
+            Route::patch('{chapter}', [LearningChapterController::class, 'updateChapter']);
+            Route::post('{chapter}/items',         [LearningChapterController::class, 'createItem']);
+            Route::post('{chapter}/conversations', [LearningChapterController::class, 'createConversation']);
+        });
+        Route::patch('learning/items/{item}',                      [LearningChapterController::class, 'updateItem']);
+        Route::delete('learning/items/{item}',                     [LearningChapterController::class, 'deleteItem']);
+        Route::post('learning/items/reorder',                      [LearningChapterController::class, 'reorderItems']);
+        Route::patch('learning/conversations/{line}',              [LearningChapterController::class, 'updateConversation']);
+        Route::delete('learning/conversations/{line}',             [LearningChapterController::class, 'deleteConversation']);
+        Route::post('learning/conversations/reorder',              [LearningChapterController::class, 'reorderConversations']);
     });
 });
