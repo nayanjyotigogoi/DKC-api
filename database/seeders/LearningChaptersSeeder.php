@@ -212,7 +212,18 @@ class LearningChaptersSeeder extends Seeder
             ['일','il',1,'এক'],['이','i',2,'দুই'],['삼','sam',3,'তিনি'],
             ['사','sa',4,'চাৰি'],['오','o',5,'পাঁচ'],['육','yuk',6,'ছয়'],
             ['칠','chil',7,'সাত'],['팔','pal',8,'আঠ'],['구','gu',9,'ন'],
-            ['십','sip',10,'দহ'],['백','baek',100,'এশ'],['천','cheon',1000,'এহাজাৰ'],
+            ['십','sip',10,'দহ'],
+            ['십일','sibil',11,'এঘাৰ'],['십이','sibi',12,'বাৰ'],
+            ['십삼','sipsam',13,'তেৰ'],['십사','sipsa',14,'চৈধ্য'],
+            ['십오','sibo',15,'পোন্ধৰ'],['십육','simnyuk',16,'ষোল'],
+            ['십칠','sipchil',17,'সোতৰ'],['십팔','sippal',18,'আঠৰ'],
+            ['십구','sipgu',19,'উনৈশ'],
+            ['이십','isip',20,'বিশ'],['삼십','samsip',30,'ত্ৰিশ'],
+            ['사십','sasip',40,'চল্লিশ'],['오십','osip',50,'পঞ্চাশ'],
+            ['육십','yuksip',60,'ষাঠি'],['칠십','chilsip',70,'সত্তৰ'],
+            ['팔십','palsip',80,'আশী'],['구십','gusip',90,'নব্বৈ'],
+            ['백','baek',100,'এশ'],['천','cheon',1000,'এহাজাৰ'],
+            ['만','man',10000,'দহহাজাৰ'],
         ];
         $useCases = [
             ['오월 삼일','o-wol sam-il','May 3rd','মে মাহৰ ৩ তাৰিখ','📅 Dates'],
@@ -260,9 +271,20 @@ class LearningChaptersSeeder extends Seeder
             ['회사원','hoesawon','Office worker','কৰ্মচাৰী'],
         ];
 
+        $examples = [
+            ['저는 나얀입니다.','Jeoneun Nayan imnida.','I am Nayan. (replace "Nayan" with your own name)','মই নায়ান। (আপোনাৰ নিজৰ নামটো ব্যৱহাৰ কৰক)'],
+            ['제 이름은 나얀죠티 고고이예요.','Je ireumeun Nayanjyoti Gogoi ieyo.','My name is Nayanjyoti Gogoi. (replace with your full name)','মোৰ নাম নায়ানজ্যোতি গগৈ। (আপোনাৰ নামটো ব্যৱহাৰ কৰক)'],
+            ['디브루가르에서 왔어요.','Dibrugareeseo wasseoyo.','I am from Dibrugarh. (replace with your city)','মই ডিব্ৰুগড়ৰ পৰা আহিছোঁ। (আপোনাৰ চহৰটো ব্যৱহাৰ কৰক)'],
+            ['저는 대학생이에요.','Jeoneun daehaksaeng ieyo.','I am a university student. (replace with your occupation)','মই এজন বিশ্ববিদ্যালয়ৰ ছাত্ৰ। (আপোনাৰ পেশা ব্যৱহাৰ কৰক)'],
+            ['반갑습니다.','Bangapseumnida.','Nice to meet you.','আপোনাক লগ পাই ভাল লাগিল।'],
+        ];
+
         $items = [];
         foreach ($phrases as $i => [$k,$r,$e,$a]) {
             $items[] = ['section'=>'intro_phrases','korean'=>$k,'romanization'=>$r,'english'=>$e,'assamese'=>$a,'sort_order'=>$i+1];
+        }
+        foreach ($examples as $i => [$k,$r,$e,$a]) {
+            $items[] = ['section'=>'intro_phrases','korean'=>$k,'romanization'=>$r,'english'=>$e,'assamese'=>$a,'sort_order'=>count($phrases)+$i+1];
         }
         foreach ($countries as $i => [$k,$r,$e,$a,$flag]) {
             $items[] = ['section'=>'countries','korean'=>$k,'romanization'=>$r,'english'=>$e,'assamese'=>$a,'meta'=>json_encode(['flag'=>$flag]),'sort_order'=>$i+1];
@@ -282,7 +304,17 @@ class LearningChaptersSeeder extends Seeder
             ['넷','net',4,'চাৰিটা'],['다섯','daseot',5,'পাঁচটা'],['여섯','yeoseot',6,'ছটা'],
             ['일곱','ilgop',7,'সাতটা'],['여덟','yeodeol',8,'আঠটা'],
             ['아홉','ahop',9,'নটা'],['열','yeol',10,'দহটা'],
+            ['열하나','yeolhana',11,'এঘাৰটা'],['열둘','yeoldul',12,'বাৰটা'],
+            ['열셋','yeolset',13,'তেৰটা'],['열넷','yeolnet',14,'চৈধ্যটা'],
+            ['열다섯','yeoldaseot',15,'পোন্ধৰটা'],['열여섯','yeolyeoseot',16,'ষোলটা'],
+            ['열일곱','yeolilgop',17,'সোতৰটা'],['열여덟','yeolyeodeol',18,'আঠৰটা'],
+            ['열아홉','yeolahop',19,'উনৈশটা'],
             ['스물','seumul',20,'বিশটা'],['서른','seoreun',30,'ত্ৰিশটা'],
+            ['마흔','maheun',40,'চল্লিশটা'],['쉰','swin',50,'পঞ্চাশটা'],
+            ['예순','yesun',60,'ষাঠিটা'],['일흔','ilheun',70,'সত্তৰটা'],
+            ['여든','yeodeun',80,'আশীটা'],['아흔','aheun',90,'নব্বৈটা'],
+            ['백','baek',100,'এশটা'],['천','cheon',1000,'এহাজাৰটা'],
+            ['만','man',10000,'দহহাজাৰটা'],
         ];
         $useCases = [
             ['스물다섯 살','seumul-daseot sal','25 years old','পঁচিশ বছৰ','🎂 Age'],
