@@ -9,4 +9,9 @@ class KoreanPhraseController extends Controller {
             KoreanPhrase::where('is_active', true)->orderBy('sort_order')->get()
         );
     }
+
+    public function featured() {
+        $phrase = KoreanPhrase::where('is_active', true)->where('is_featured', true)->first();
+        return response()->json($phrase);
+    }
 }

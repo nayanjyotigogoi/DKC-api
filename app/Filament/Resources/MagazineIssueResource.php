@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MagazineIssueResource\Pages;
 use App\Models\MagazineIssue;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -35,7 +36,14 @@ class MagazineIssueResource extends Resource
                 Textarea::make('description')->columnSpanFull(),
                 Toggle::make('is_featured'),
                 TextInput::make('page_count')->numeric(),
-                TextInput::make('pdf_path'),
+                FileUpload::make('pdf_path')
+                    ->label('Handmade Edition PDF')
+                    ->helperText('Upload the original handmade PDF. It will be stored privately and only viewable — not downloadable.')
+                    ->disk('private')
+                    ->directory('magazines')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->maxSize(2097152)
+                    ->columnSpanFull(),
                 TextInput::make('sort_order')->numeric(),
             ]);
     }

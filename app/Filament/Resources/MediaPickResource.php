@@ -39,6 +39,11 @@ class MediaPickResource extends Resource
                 Textarea::make('description')->columnSpanFull(),
                 TextInput::make('tag'),
                 TextInput::make('streaming_platform'),
+                TextInput::make('streaming_url')
+                    ->label('Streaming URL')
+                    ->helperText('Paste the full link e.g. https://www.netflix.com/title/...')
+                    ->url()
+                    ->columnSpanFull(),
                 Toggle::make('is_active')->default(true),
                 TextInput::make('sort_order')->numeric(),
             ]);

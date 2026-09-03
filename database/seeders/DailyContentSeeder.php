@@ -63,6 +63,23 @@ class DailyContentSeeder extends Seeder
             ['did_you_know','존댓말',    'Jondaemal',    'Korean has an entire formal speech system called "jondaemal." How you speak changes completely depending on who you\'re talking to — age matters a lot!'],
         ];
 
+        $spotlights = [
+            ['club_tip', '도전', 'Challenge',  'Try greeting someone in Korean today — 안녕하세요! (Annyeonghaseyo). Notice their reaction. Language lives in connection.'],
+            ['club_tip', '팁',   'Tip',         'Hangul takes just a few hours to learn. Start with the 14 consonants — each one mimics the shape of the mouth that makes it.'],
+            ['club_tip', '문화', 'Culture',     'In Korea, age matters in speech. Korean has formal and informal registers — learning when to use 존댓말 (jondaemal) is key to respectful conversation.'],
+            ['club_tip', '클럽', 'Club',        'Our club meets to practise Korean together — speaking with others is 10× faster than studying alone. Join a session and try one new phrase.'],
+            ['club_tip', '격언', 'Proverb',     '천리 길도 한 걸음부터 — A journey of a thousand miles begins with a single step. Every Korean word you learn is that step.'],
+            ['club_tip', '듣기', 'Listening',   'Watch one scene of a Korean drama today without subtitles. Even catching 2–3 words you recognise trains your ear faster than textbooks.'],
+            ['club_tip', '쓰기', 'Writing',     'Write your name in Hangul today. Korean is phonetic — sound it out letter by letter. Share it in our community group!'],
+        ];
+        foreach ($spotlights as $i => [$type, $kw, $rom, $fact]) {
+            DB::table('fun_facts')->insert([
+                'type' => $type, 'korean_word' => $kw, 'romanized' => $rom, 'fact' => $fact,
+                'sort_order' => 100 + $i + 1, 'is_active' => true,
+                'created_at' => now(), 'updated_at' => now(),
+            ]);
+        }
+
         foreach ($facts as $i => [$type, $kw, $rom, $fact]) {
             DB::table('fun_facts')->insert([
                 'type' => $type, 'korean_word' => $kw, 'romanized' => $rom, 'fact' => $fact,
@@ -74,22 +91,23 @@ class DailyContentSeeder extends Seeder
         // ── Media Picks ───────────────────────────────────────────────────────
         DB::table('media_picks')->truncate();
         $picks = [
-            ['Drama', 'Crash Landing on You',       '사랑의 불시착', 'A South Korean heiress accidentally crash-lands in North Korea and falls in love with a military officer. A perfect blend of romance, humor, and drama.', 'Must Watch', 'Netflix',           1],
-            ['Movie', 'Parasite',                   '기생충',       'Bong Joon-ho\'s Oscar-winning masterpiece about class struggle and social inequality. The first non-English film to win Best Picture at the Academy Awards.', 'Oscar Winner', 'Various platforms', 2],
-            ['Book',  'Please Look After Mom',       '엄마를 부탁해', 'Kyung-sook Shin\'s internationally acclaimed novel about a Korean family searching for their missing mother. A deeply moving exploration of love and regret.', 'Bestseller',  null,                3],
-            ['Drama', 'Reply 1988',                 '응답하라 1988', 'A nostalgic coming-of-age drama set in a Seoul neighbourhood in 1988. Widely considered one of the greatest Korean dramas ever made.', 'Fan Favourite', 'Netflix',           4],
-            ['Music', 'BTS — Map of the Soul',      'BTS 소울 맵',  'The album that took BTS to global superstardom. A philosophical exploration of the self through the lens of Jungian psychology and Korean artistry.', 'Global Hit',  'Spotify / YouTube',  5],
-            ['Movie', 'Train to Busan',             '부산행',       'A heart-pounding zombie thriller set aboard a speeding Korean bullet train. One of the best action-horror films of the decade.', 'Thriller',    'Netflix',            6],
-            ['Drama', 'My Mister',                  '나의 아저씨',  'A quiet, profound drama about two people in difficult circumstances who find solace in each other. Widely praised for its emotional depth and writing.', 'Award Winner','Various platforms',  7],
-            ['Book',  'The Vegetarian',             '채식주의자',   'Han Kang\'s Man Booker Prize-winning novel — a surreal, disturbing story of a woman who stops eating meat and its impact on everyone around her.', 'Booker Prize','Paperback',          8],
-            ['Music', 'IU — Palette',               'IU — 팔레트', 'A deeply personal album by Korea\'s "Nation\'s Little Sister." Palette is a reflective celebration of growing up — elegant, warm, and utterly distinctive.', 'K-Pop Classic','Spotify / YouTube', 9],
-            ['Drama', 'Goblin',                     '도깨비',       'A 939-year-old goblin searches for his human bride to break a curse. Stunning visuals, a sweeping soundtrack, and unforgettable performances.', 'Cult Classic', 'Netflix',            10],
+            ['Drama', 'Crash Landing on You',  '사랑의 불시착', 'A South Korean heiress accidentally crash-lands in North Korea and falls in love with a military officer. A perfect blend of romance, humor, and drama.', 'Must Watch',   'Netflix',            'https://www.netflix.com/title/81159258',                          1],
+            ['Movie', 'Parasite',              '기생충',       'Bong Joon-ho\'s Oscar-winning masterpiece about class struggle and social inequality. The first non-English film to win Best Picture at the Academy Awards.', 'Oscar Winner', 'Prime Video',        'https://www.amazon.com/Parasite-Kang-ho-Song/dp/B07ZW2LPPB',     2],
+            ['Book',  'Please Look After Mom', '엄마를 부탁해', 'Kyung-sook Shin\'s internationally acclaimed novel about a Korean family searching for their missing mother. A deeply moving exploration of love and regret.', 'Bestseller',   'Amazon Books',       'https://www.amazon.com/Please-Look-After-Mom-Novel/dp/0307739511',3],
+            ['Drama', 'Reply 1988',            '응답하라 1988', 'A nostalgic coming-of-age drama set in a Seoul neighbourhood in 1988. Widely considered one of the greatest Korean dramas ever made.', 'Fan Favourite', 'Netflix',           'https://www.netflix.com/title/80188315',                          4],
+            ['Music', 'BTS — Map of the Soul', 'BTS 소울 맵',  'The album that took BTS to global superstardom. A philosophical exploration of the self through the lens of Jungian psychology and Korean artistry.', 'Global Hit',   'Spotify',            'https://open.spotify.com/album/0y4peHPDUlHggRqJCBjfXE',          5],
+            ['Movie', 'Train to Busan',        '부산행',       'A heart-pounding zombie thriller set aboard a speeding Korean bullet train. One of the best action-horror films of the decade.', 'Thriller',     'Netflix',            'https://www.netflix.com/title/80117824',                          6],
+            ['Drama', 'My Mister',             '나의 아저씨',  'A quiet, profound drama about two people in difficult circumstances who find solace in each other. Widely praised for its emotional depth and writing.', 'Award Winner', 'Viki',               'https://www.viki.com/tv/35286c-my-mister',                        7],
+            ['Book',  'The Vegetarian',        '채식주의자',   'Han Kang\'s Man Booker Prize-winning novel — a surreal, disturbing story of a woman who stops eating meat and its impact on everyone around her.', 'Booker Prize', 'Amazon Books',       'https://www.amazon.com/Vegetarian-Han-Kang/dp/1101906111',        8],
+            ['Music', 'IU — Palette',          'IU — 팔레트', 'A deeply personal album by Korea\'s "Nation\'s Little Sister." Palette is a reflective celebration of growing up — elegant, warm, and utterly distinctive.', 'K-Pop Classic','Spotify',           'https://open.spotify.com/album/3NnMnHRamFDBh5rghEhXq3',          9],
+            ['Drama', 'Goblin',                '도깨비',       'A 939-year-old goblin searches for his human bride to break a curse. Stunning visuals, a sweeping soundtrack, and unforgettable performances.', 'Cult Classic', 'Netflix',            'https://www.netflix.com/title/80187175',                          10],
         ];
 
-        foreach ($picks as [$type, $title, $ko, $desc, $tag, $platform, $order]) {
+        foreach ($picks as [$type, $title, $ko, $desc, $tag, $platform, $url, $order]) {
             DB::table('media_picks')->insert([
                 'type' => $type, 'title' => $title, 'korean_title' => $ko,
                 'description' => $desc, 'tag' => $tag, 'streaming_platform' => $platform,
+                'streaming_url' => $url,
                 'sort_order' => $order, 'is_active' => true,
                 'created_at' => now(), 'updated_at' => now(),
             ]);

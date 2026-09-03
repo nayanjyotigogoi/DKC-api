@@ -31,6 +31,7 @@ class FunFactResource extends Resource
                     ->options([
                         'fun_fact'     => 'Fun Fact',
                         'did_you_know' => 'Did You Know',
+                        'club_tip'     => 'DKC Daily Tip',
                     ]),
                 TextInput::make('korean_word'),
                 TextInput::make('romanized'),
@@ -48,6 +49,7 @@ class FunFactResource extends Resource
                     ->colors([
                         'success' => 'fun_fact',
                         'warning' => 'did_you_know',
+                        'primary' => 'club_tip',
                     ]),
                 TextColumn::make('korean_word'),
                 TextColumn::make('romanized'),
@@ -59,6 +61,7 @@ class FunFactResource extends Resource
                     ->options([
                         'fun_fact'     => 'Fun Fact',
                         'did_you_know' => 'Did You Know',
+                        'club_tip'     => 'DKC Daily Tip',
                     ]),
             ])
             ->actions([

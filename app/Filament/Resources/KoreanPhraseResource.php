@@ -28,6 +28,10 @@ class KoreanPhraseResource extends Resource
                 TextInput::make('romanized'),
                 TextInput::make('sort_order')->numeric(),
                 Toggle::make('is_active')->default(true),
+                Toggle::make('is_featured')
+                    ->label('Feature as Phrase of the Day')
+                    ->helperText('Turn on to pin this phrase as today\'s Phrase of the Day. Turn off to return to automatic daily rotation.')
+                    ->default(false),
             ]);
     }
 
@@ -40,6 +44,7 @@ class KoreanPhraseResource extends Resource
                 TextColumn::make('romanized'),
                 TextColumn::make('sort_order')->sortable(),
                 IconColumn::make('is_active')->boolean(),
+                IconColumn::make('is_featured')->boolean()->label('Featured Today'),
             ])
             ->filters([])
             ->actions([
