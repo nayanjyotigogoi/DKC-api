@@ -15,6 +15,8 @@ use App\Http\Controllers\Api\NewsletterController;
 use App\Http\Controllers\Api\CourseInterestController;
 use App\Http\Controllers\Api\ClubMemberController;
 use App\Http\Controllers\Api\ResourceController;
+use App\Http\Controllers\Api\PressMentionController;
+use App\Http\Controllers\Api\GoodieOrderController;
 use App\Http\Controllers\Api\EventRegistrationController;
 use App\Http\Controllers\Api\Learning\ModuleController;
 use App\Http\Controllers\Api\Learning\LessonController;
@@ -45,6 +47,7 @@ Route::prefix('v1')->group(function () {
         Route::get('magazine/{slug}/pdf-token', [MagazineController::class, 'pdfToken']);
         Route::get('magazine/{slug}', [MagazineController::class, 'show']);
         Route::get('goodies', [GoodieController::class, 'index']);
+        Route::post('goodie-orders', [GoodieOrderController::class, 'store'])->middleware('throttle:apply');
         Route::get('members', [MemberController::class, 'index']);
         Route::get('club-members', [ClubMemberController::class, 'index']);
         Route::get('phrases', [KoreanPhraseController::class, 'index']);
@@ -54,6 +57,7 @@ Route::prefix('v1')->group(function () {
         Route::get('settings', [SiteSettingController::class, 'index']);
         Route::get('resources/categories', [ResourceController::class, 'categories']);
         Route::get('resources', [ResourceController::class, 'index']);
+        Route::get('press-mentions', [PressMentionController::class, 'index']);
 
         // ── Chapter-based learning — public read ──────────────────────────
         Route::get('learning/chapters',        [LearningChapterController::class, 'publicIndex']);
