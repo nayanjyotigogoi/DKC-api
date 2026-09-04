@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PressMention;
+use Illuminate\Support\Facades\Storage;
 
 class PressMentionController extends Controller
 {
@@ -19,7 +20,7 @@ class PressMentionController extends Controller
                 'source_name'    => $m->source_name,
                 'source_url'     => $m->source_url,
                 'image_url'      => $m->image_path
-                    ? config('app.url') . '/press/images/' . $m->image_path
+                    ? Storage::disk('press')->url($m->image_path)
                     : null,
                 'language'       => $m->language,
                 'published_date' => $m->published_date?->format('M j, Y'),
