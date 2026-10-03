@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Learning\Conversation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -27,6 +28,12 @@ class LearningChapter extends Model
     {
         return $this->hasMany(LearningChapterConversation::class, 'chapter_id')
                     ->orderBy('sort_order');
+    }
+
+    public function richConversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'chapter_id')
+                    ->orderBy('id');
     }
 
     /** Items grouped by section, preserving sort_order within each group. */

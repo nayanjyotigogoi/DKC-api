@@ -25,9 +25,11 @@ class ConversationResource extends Resource
     protected static ?string $navigationLabel = 'Conversations';
     protected static ?int    $navigationSort  = 5;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function canViewAny(): bool
     {
-        return auth()->user()?->canManageLearning() ?? false;
+        return false;
     }
 
     public static function form(Form $form): Form
@@ -101,7 +103,6 @@ class ConversationResource extends Resource
                             ->required(),
                     ]),
                 ])
-                ->orderColumn('order_index')
                 ->defaultItems(2)
                 ->columnSpanFull(),
         ]);

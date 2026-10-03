@@ -15,7 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 class ConversationsRelationManager extends RelationManager
 {
     protected static string $relationship = 'conversations';
-    protected static ?string $title = 'Conversation Lines';
+    protected static ?string $title = 'Conversation Lines (Ch. 1–6)';
     protected static ?string $recordTitleAttribute = 'korean';
 
     public static function form(Form $form): Form

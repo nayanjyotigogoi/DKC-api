@@ -9,7 +9,7 @@ class ConversationService
 {
     public function paginate(array $filters = [], int $perPage = 24): LengthAwarePaginator
     {
-        $query = Conversation::orderBy('title_en');
+        $query = Conversation::with(['lines' => fn($q) => $q->orderBy('order_index')])->orderBy('title_en');
 
         if (!empty($filters['level'])) {
             $query->where('level', $filters['level']);

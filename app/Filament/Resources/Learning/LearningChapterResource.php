@@ -123,8 +123,12 @@ class LearningChapterResource extends Resource
                     ->counts('items'),
 
                 TextColumn::make('conversations_count')
-                    ->label('Conversations')
+                    ->label('Conversations (Ch. 1–6)')
                     ->counts('conversations'),
+
+                TextColumn::make('rich_conversations_count')
+                    ->label('Conversations (Ch. 7+)')
+                    ->counts('richConversations'),
 
                 ToggleColumn::make('is_published')
                     ->label('Published'),
@@ -140,6 +144,7 @@ class LearningChapterResource extends Resource
         return [
             RelationManagers\ItemsRelationManager::class,
             RelationManagers\ConversationsRelationManager::class,
+            RelationManagers\RichConversationsRelationManager::class,
         ];
     }
 

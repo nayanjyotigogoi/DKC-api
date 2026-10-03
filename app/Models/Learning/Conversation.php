@@ -2,9 +2,11 @@
 
 namespace App\Models\Learning;
 
+use App\Models\LearningChapter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Conversation extends Model
@@ -14,6 +16,7 @@ class Conversation extends Model
     protected $table = 'learning_conversations';
 
     protected $fillable = [
+        'chapter_id',
         'title_ko',
         'title_en',
         'title_as',
@@ -30,6 +33,11 @@ class Conversation extends Model
         'speakers' => 'array',
         'tags'     => 'array',
     ];
+
+    public function chapter(): BelongsTo
+    {
+        return $this->belongsTo(LearningChapter::class, 'chapter_id');
+    }
 
     public function lines(): HasMany
     {
